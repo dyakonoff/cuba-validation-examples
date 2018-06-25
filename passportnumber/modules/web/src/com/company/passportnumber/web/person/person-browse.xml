@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.passportnumber.web.person.PersonBrowse"
+        focusComponent="personsTable"
+        lookupComponent="personsTable"
+        messagesPack="com.company.passportnumber.web.person">
+    <dsContext>
+        <groupDatasource id="personsDs"
+                         class="com.company.passportnumber.entity.Person"
+                         view="_local">
+            <query>
+                <![CDATA[select e from passportnumber$Person e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="personsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="personsTable"
+                datasource="personsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="personsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="email"/>
+                <column id="country"/>
+                <column id="passportNumber"/>
+            </columns>
+            <rows datasource="personsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="personsTable.create"/>
+                <button id="editBtn"
+                        action="personsTable.edit"/>
+                <button id="removeBtn"
+                        action="personsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

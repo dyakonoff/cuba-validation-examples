@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
+    <screen id="passportnumber$Person.browse"
+            template="com/company/passportnumber/web/person/person-browse.xml"/>
+    <screen id="passportnumber$Person.edit"
+            template="com/company/passportnumber/web/person/person-edit.xml"/>
+</screen-config>
