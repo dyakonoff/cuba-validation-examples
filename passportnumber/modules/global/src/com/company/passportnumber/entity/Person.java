@@ -60,6 +60,4 @@ public class Person extends StandardEntity {
     public String getEmail() {
         return email;
     }
-
-
 }

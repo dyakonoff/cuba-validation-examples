@@ -9,8 +9,8 @@ public enum CountryCode implements EnumClass<Integer> {
 
     AT(10),
     BE(20),
-    HR(30),
-    BG(40),
+    BG(30),
+    HR(40),
     CY(50),
     CZ(60),
     DK(70),

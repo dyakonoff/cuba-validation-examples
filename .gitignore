@@ -1,0 +1,5 @@
+**/.DS_store
+resources/*.kra~
+resources/*autosave.kra
+resources/*.png~
+.vscode/
