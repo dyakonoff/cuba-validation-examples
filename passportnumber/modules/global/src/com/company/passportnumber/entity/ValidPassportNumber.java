@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Checks that Customer has either phone or email
+ * Checks that passport number is valid
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

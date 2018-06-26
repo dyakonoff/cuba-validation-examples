@@ -23,18 +23,20 @@ import org.hibernate.validator.constraints.Length;
 public class Person extends StandardEntity {
     private static final long serialVersionUID = -9150857881422152651L;
 
-    @Pattern(message = "Bad formed person name", regexp = "^[A-Z][a-z]*(\\s(([a-z]{1,3})|(([a-z]+\\')?[A-Z][a-z]*)))*$")
+    @Pattern(message = "Bad formed person name: ${validatedValue}",
+            regexp = "^[A-Z][a-z]*(\\s(([a-z]{1,3})|(([a-z]+\\')?[A-Z][a-z]*)))*$")
     @Length(min = 2)
     @NotNull
     @Column(name = "NAME", nullable = false)
     protected String name;
 
-    @Email(message = "Email addres is in not valid format")
+    @Email(message = "Email address has invalid format: ${validatedValue}",
+            regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")
     @Column(name = "EMAIL", length = 120)
     protected String email;
 
     @DecimalMax(message = "Person height can not exceed 300 centimeters", value = "300")
-    @DecimalMin(message = "Person height should be positive", value = "0")
+    @DecimalMin(message = "Person height should be positive", value = "0", inclusive = false)
     @Column(name = "HEIGHT")
     protected BigDecimal height;
 
