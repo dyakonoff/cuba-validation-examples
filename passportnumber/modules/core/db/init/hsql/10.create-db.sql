@@ -11,6 +11,7 @@ create table PASSPORTNUMBER_PERSON (
     --
     NAME varchar(255) not null,
     EMAIL varchar(120),
+    HEIGHT decimal(19, 2),
     COUNTRY integer not null,
     PASSPORT_NUMBER varchar(15) not null,
     --

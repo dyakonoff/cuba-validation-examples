@@ -18,6 +18,7 @@
                     datasource="personDs">
             <column width="250px">
                 <field property="name"/>
+                <field property="height"/>
                 <field property="email"/>
                 <field property="country"/>
                 <field property="passportNumber"/>
