@@ -9,11 +9,8 @@ import java.util.Collection;
 @Component("passportnumber_ApplicationTransactionListener")
 public class ApplicationTransactionListener implements BeforeCommitTransactionListener {
 
-
     @Override
     public void beforeCommit(EntityManager entityManager, Collection<Entity> managedEntities) {
-
+        // do the checks
     }
-
-
 }
