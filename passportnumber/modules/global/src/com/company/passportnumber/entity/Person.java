@@ -15,7 +15,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
+@Listeners("passportnumber_PersonEntityListener")
 @NamePattern("%s|name")
 @Table(name = "PASSPORTNUMBER_PERSON")
 @Entity(name = "passportnumber$Person")
