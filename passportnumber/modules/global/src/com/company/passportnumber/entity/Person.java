@@ -22,6 +22,7 @@ import com.haulmont.cuba.core.entity.annotation.Listeners;
 @Table(name = "PASSPORTNUMBER_PERSON")
 @Entity(name = "passportnumber$Person")
 @ValidPassportNumber(groups = {Default.class, UiCrossFieldChecks.class})
+@FraudDetectionFlag
 public class Person extends StandardEntity {
     private static final long serialVersionUID = -9150857881422152651L;
 
