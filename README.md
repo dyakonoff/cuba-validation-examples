@@ -2,6 +2,8 @@
 
 **This text discusses approaches to data validation. What are the common pitfalls that many projects fall into and what are the best practices Java applications should follow.**
 
+Github pages view: https://dyakonoff.github.io/cuba-validation-examples/
+
 ## Content
 
 1. [Introduction](#introduction)
@@ -49,7 +51,7 @@ Let's take an example most of you faced with, or even participated :). If a spec
 
 Everybody knows the way to avoid this problem, validations must be centralized! In CUBA this central point of such kind of validation is JPA annotations over entities. Based on this meta information, CUBA Studio generates right DDL scripts and applies corresponding validators on the client side.
 
-![jpa_constraints_2](resources/jpa_constraints_2.png)
+![jpa_constraints_2](https://github.com/dyakonoff/cuba-validation-examples/blob/master/resources/jpa_constraints_2.png)
 
 If JPA annotations get changed, CUBA updates DDL scripts and generate migration scripts, so next time you deploy your project, new JPA-based limitations will be applied to your application’s UI and DB.
 
@@ -191,7 +193,7 @@ Nothing complex, do you agree?
 
 Now, let’s check how all this stuff work. CUBA has some extra goodies: it not just shows error messages to a user but also highlight form fields that hasn’t passed single-field bean validations with nice red lines:
 
-![custom_validation_result](resources/custom_validation_result.png)
+![custom_validation_result](https://github.com/dyakonoff/cuba-validation-examples/blob/master/resources/custom_validation_result.png)
 
 Isn’t this a neat thing? You got nice error UI feedback in the user's browser just after adding couple Java annotations to your domain model entities.
 
@@ -268,7 +270,7 @@ CUBA makes these methods available at the next endpoints:
 
 Let’s open the Postman app and ensure that validation works as expected:
 
-![rest_validation_result](resources/rest_validation_result.png)
+![rest_validation_result](https://github.com/dyakonoff/cuba-validation-examples/blob/master/resources/rest_validation_result.png)
 
 You might have noted that the above example doesn’t validate passport number. This is because it requires cross-parameter validation of the `addNewPerson` method since `passportNumber` validation regexp pattern depends from the `country` value. Such cross parameter checks are direct equivalent to class-level constraints for entities!
 
@@ -410,7 +412,7 @@ but the same gives them weaknesses:
 
 So, transaction listeners is a good solution when you need to inspect many different type of entities with the same algorithm, like feeding data to a custom fraud detector that serves all your business objects.
 
-~[You shall not pass!](resources/gendalf.png)
+![You shall not pass!](https://github.com/dyakonoff/cuba-validation-examples/blob/master/resources/gendalf.png)
 
 Let’s look at the example that checks if an entity is annotated with `@FraudDetectionFlag` annotation and if yes, runs the fraud detector to validate it. Once again, please note, that this method is called **before every DB transaction gets committed** in the system, so the code has to try to check as least objects as possible as fast as it can.
 
