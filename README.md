@@ -2,6 +2,24 @@
 
 **This text discusses approaches to data validation. What are the common pitfalls that many projects fall into and what are the best practices Java applications should follow.**
 
+## Content
+
+1. [Introduction](#introduction)
+1. [DB Constraints Validations](#db-constraints-validations)
+1. [Bean Validation](#bean-validation)
+1. [Validation by Contract](#validation-by-contract)
+1. [Beyond Bean Validation](#beyond-bean-validation)
+    * [Entity Listeners](#entity-listeners)
+    * [Transaction Listeners](#transaction-listeners)
+1. [Conclusion](#conclusion)
+1. [References](#references)
+    * [Standards & implementations](#standards--implementations)
+    * [Libraries](#libraries)
+    * [Validation ideology](#validation-ideology)
+    * [Further reading](#further-reading)
+
+## Introduction
+
 I often have seen projects that didn’t have almost any conscious strategy for data validation. Their teams  worked under the great pressure of deadlines, unclear requirements and just didn’t have enough time to make validation in a proper and consistent way. So data validation code could be found everywhere: in Javascript snippets, Java screen controllers, business logic beans, domain model entities, database constraints and triggers. This code was full of if-else statements, was throwing different unchecked exceptions and it was just hard to find the right place where this damn piece of data could be validated... So, after a while, when project grew up enough it became quite hard and expensive to keep this validations consistent and following requirements, which as I’ve said are often fuzzy.
 
 Is there a path to do data validation in an elegant, standard and concise way? The way that doesn’t fall ito a sin of unreadability, the way that helps us to keep most of the data validation logic together and which has most of the code already done for us by developers of popular Java frameworks?
@@ -28,7 +46,7 @@ Perhaps, the most common and straightforward way of data validation uses DB-leve
 Let's take an example most of you faced with, or even participated :). If a spec says that the passport field should have 10 digits in its number, most probably it will be checked everywhere: by DB architect in DDL, by backend developer in the corresponding Entity and REST services, finally, by UI developer right in client source-code. Later on this requirement changes and size of the field grows up to 15 digits. Tech Support changes the DB constraint, but for a user it means nothing as the client side check will not be passed anyway...
 
 Everybody knows the way to avoid this problem, validations must be centralized! In CUBA this central point of such kind of validation is JPA annotations over entities. Based on this meta information, CUBA Studio generates right DDL scripts and applies corresponding validators on the client side.
- 
+
 ![jpa_constraints_2](resources/jpa_constraints_2.png)
 
 If JPA annotations get changed, CUBA updates DDL scripts and generate migration scripts, so next time you deploy your project, new JPA-based limitations will be applied to your application’s UI and DB.
@@ -47,14 +65,14 @@ Using Bean Validation approach brings quite a lot benefits to your project:
 
 * Validation logic is concentrated near your domain model: defining value, method, bean constraint is done in a natural way that allows to bring OOP approach to the next level.
 * Bean Validation standard gives you tens of [validation annotations out of the box](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-defineconstraints-spec), like: `@NotNull`, `@Size`, `@Min`, `@Max`, `@Pattern`, `@Email`, `@Past`, less standard like `@URL`, `@Length`, mighty `@ScriptAssert` and many others.
-* You are not limited by predefined constraints and can define your own constraint annotations. You can make a new annotation also, by combining couple others or make a brand new one and define a Java class that will be served as a validator.<br />For example, looking at our previous example we can define a class-level annotation `@ValidPassportNumber` to check that passport number follows right format which depends from the country field value.
+* You are not limited by predefined constraints and can define your own constraint annotations. You can make a new annotation also, by combining couple others or make a brand new one and define a Java class that will be served as a validator.<br />For example, looking at our previous example we can define a class-level annotation `@ValidPassportNumber` to check that passport number follows right format which depends from the `country` field value.
 * You can put constraints not just on fields and classes, but also on methods and method parameters. This is called **“validation by contract”** and is the topic of the later section.
 
 [CUBA Platform](https://www.cuba-platform.com/) (as some other frameworks) calls these bean validations automatically when user submits the data, so user would get the error message instantly if validation fails and you don’t need to worry about running these bean validators manually.
 
 Let’s take a look at the passport number example once again, but this time we’d like to add couple additional constraints on the entity:
 
-* Person name should have length of 2 or more and be a well-formed name. Regexp is quite complex, but Charles Ogier de Batz de Castelmore Comte d'Artagnan passes the check and R2D2 does not :) ;
+* Person name should have length of 2 or more and be a well-formed name. Regexp is quite complex, but *"Charles Ogier de Batz de Castelmore Comte d'Artagnan"* passes the check and *R2D2* does not :) ;
 * Person height should be in interval: 0 < height <= 300 centimeters;
 * Email string should be a properly formatted email address.
 
@@ -195,7 +213,7 @@ With bean validation, constraints can be applied to the parameters and return va
 1. The checks don’t need to be performed manually in the imperative way (e.g. by throwing `IllegalArgumentException` or similar). We rather specify constraints declaratively, so we have more readable and expressive code;
 1. Constraints are reusable, configurable and customizable: we don’t need to write validation code every time we need to do the checks. Less code - less bugs.
 1. If a class or method return value or method parameter is marked with `@Validated` annotation, that the constraints check would be done automatically by the framework on every method call.
-1. If an executable is marked with `@Documented` annotation then it’s pre- and postconditions would be included in the generated JavaDoc.
+1. If an executable is marked with `@Documented` annotation then it’s pre- and post- conditions would be included in the generated JavaDoc.
 
 As the result with the **‘validation by contract’** approach we have clear code, less amount of it which it is easier to support and understand.
 
@@ -465,3 +483,7 @@ I hope that this article refreshed your memories about different validation meth
 * [JavaFX Form Validation](http://mail.openjdk.java.net/pipermail/openjfx-dev/2012-June/002361.html)
 * [Blah vs Bean Validation: you missed the point like Mars Climate Orbiter](http://in.relation.to/2014/06/19/blah-vs-bean-validation-you-missed-the-point-like-mars-climate-orbiter/)
 * [Avoiding Many If Blocks For Validation Checking](https://dzone.com/articles/avoiding-many-if-blocks)
+
+### Further reading
+
+* [Validation cookbook for CUBA applications](https://github.com/dyakonoff/cuba-validation)
