@@ -39,6 +39,8 @@ For us, developers of [CUBA Platform](https://www.cuba-platform.com/), it is ver
 
 In this article I’ll be using an application based on CUBA Platform for all the examples. However, since CUBA is based on Spring and EclipseLink, most of this examples will work for any other Java framework that supports JPA and bean validation standard.
 
+[Top](#content)
+
 ## DB Constraints Validations
 
 Perhaps, the most common and straightforward way of data validation uses DB-level constraints, such as required flag (‘not null’ fields), string length, unique indexes and so on. This way is very natural for enterprise applications, as this class of software is usually heavily data-centric. However, even here developers often do mistakes, defining constraints separately for each tier of an application. This problem is often caused by splitting responsibilities between developers. 
@@ -54,6 +56,8 @@ If JPA annotations get changed, CUBA updates DDL scripts and generate migration 
 Despite simplicity and implementation that spans up to DB level, and so is completely bullet-proof, JPA annotations are limited by the simplest cases that can be expressed in DDL standard without involving DB-specific triggers or stored procedures. So, JPA-based constraints can ensure that entity field is unique or mandatory or can define maximum length for a `varchar` column. Also, you can define unique constraint to the combination of columns with `@UniqueConstraint` annotation. But this is pretty much it.
 
 However, in the cases that require more complex validation logic like checking for maximum and minimum values of a field or validating with a expression or doing a custom check that is specific to you application we need to utilize the well known approach called **“Bean Validation”**.
+
+[Top](#content)
 
 ## Bean Validation
 
@@ -204,6 +208,8 @@ But what shall we do if we need to set constraint onto a method, a constructor o
 
 The answer is simple: bean validation can be applied to methods as well!
 
+[Top](#content)
+
 ## Validation by Contract
 
 Sometimes, we need to make another step and go beyond just application data model state validation. Many methods might benefit from automatic parameters and return values validation. This might be required not just when we need to check data coming to a REST or SOAP endpoint but also when we want to express preconditions and postconditions for method calls to be sure that input data have been checked before method body executes or that the return values are in the expected range, or we just want to declaratively express parameters boundaries for better readability.
@@ -268,6 +274,8 @@ You might have noted that the above example doesn’t validate passport number. 
 
 Cross parameter validation is supported by JSR 349 and 380, you can consult [hibernate documentation](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-cross-parameter-constraints) for how to implement custom cross-parameter validators for class / interface methods.
 
+[Top](#content)
+
 ## Beyond Bean Validation
 
 Nothing is perfect in the world, and bean validation has has some limitations as well:
@@ -276,6 +284,8 @@ Nothing is perfect in the world, and bean validation has has some limitations as
 1. Some checks have to be made inside the transaction. For example, e-commerce system should check if there are enough items in stock to fulfill the order before committing it to the database. Such check could be done only from inside the transaction, because the system is concurrent and quantities in stock could be changed at any time.
 
 CUBA platform offers two mechanisms to validate data before commit which are called [entity listeners](https://doc.cuba-platform.com/manual-latest/entity_listeners.html) and [transaction listeners](https://doc.cuba-platform.com/manual-latest/transaction_listeners.html). Let’s look at them a bit more closely.
+
+[Top](#content)
 
 ### Entity Listeners
 
@@ -382,6 +392,8 @@ Entity listeners are great choice when you:
 * Need to traverse not just given entity object, like `Order`, but visit the object that are in the association or composition with the entity, like `OrderItems` objects for the `Order` entity;
 * Want to track insert / update / delete operations for just some of your entity classes, for example you want to track such events only for `Order` and `OrderItem` entities, and don’t need to validate changes in other entity classes during transaction.
 
+[Top](#content)
+
 ### Transaction Listeners
 
 [CUBA transaction listener’s](https://doc.cuba-platform.com/manual-latest/transaction_listeners.html) works in transactional context as well, but in comparison with entity listeners they get called for **every** database transaction.
@@ -435,6 +447,8 @@ public class ApplicationTransactionListener implements BeforeCommitTransactionLi
 
 To become a transaction listener, managed bean should just implement `BeforeCommitTransactionListener` interface and implement `beforeCommit` method. Transaction listeners are wired up automatically when the application starts. CUBA registers all classes that implements `BeforeCommitTransactionListener` or `AfterCompleteTransactionListener` as transaction listeners.
 
+[Top](#content)
+
 ## Conclusion
 
 Bean validation [(JPA 303, 349 and 980)](https://beanvalidation.org/specification/) is an approach that could serve as a concrete foundation for 95% of the data validation cases that happen in an enterprise project. The big advantage of such approach is that most of your validation logic is concentrated right in your domain model classes. So it is easy to be found, easy to be read and be supported. Spring, CUBA and many libraries are aware about these standards and calls the validation checks automatically during UI input, validated method calls or ORM persistence process, so validation works like a charm from developer’s perspective.
@@ -450,6 +464,8 @@ At the end, let’s formulate a rule of thumb to choose the best validation meth
 * **Transaction listeners** are dangerous but ultimate weapon that works inside transactional context. Use it when you need to decide at runtime what objects have to be validated or when you need to check many different types of your entities against the same validation algorithm.
 
 I hope that this article refreshed your memories about different validation methods available in Java enterprise applications and gave you couple ideas how to improve architecture of the projects you are working on.
+
+[Top](#content)
 
 ---
 
@@ -487,3 +503,5 @@ I hope that this article refreshed your memories about different validation meth
 ### Further reading
 
 * [Validation cookbook for CUBA applications](https://github.com/dyakonoff/cuba-validation)
+
+[Top](#content)
