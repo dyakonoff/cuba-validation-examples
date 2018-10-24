@@ -1,3 +1,5 @@
+![Validation](https://github.com/dyakonoff/cuba-validation-examples/raw/master/resources/Validation.png)
+
 # Validation in Java applications
 
 **This text discusses approaches to data validation. What are the common pitfalls that many projects fall into and what are the best practices Java applications should follow.**
@@ -6,19 +8,21 @@ Github pages view: https://dyakonoff.github.io/cuba-validation-examples/
 
 ## Content
 
-1. [Introduction](#introduction)
-1. [DB Constraints Validations](#db-constraints-validations)
-1. [Bean Validation](#bean-validation)
-1. [Validation by Contract](#validation-by-contract)
-1. [Beyond Bean Validation](#beyond-bean-validation)
-    * [Entity Listeners](#entity-listeners)
-    * [Transaction Listeners](#transaction-listeners)
-1. [Conclusion](#conclusion)
-1. [References](#references)
-    * [Standards & implementations](#standards--implementations)
-    * [Libraries](#libraries)
-    * [Validation ideology](#validation-ideology)
-    * [Further reading](#further-reading)
+* [Validation in Java applications](#validation-in-java-applications)
+    * [Content](#content)
+    * [Introduction](#introduction)
+    * [DB Constraints Validations](#db-constraints-validations)
+    * [Bean Validation](#bean-validation)
+    * [Validation by Contract](#validation-by-contract)
+    * [Beyond Bean Validation](#beyond-bean-validation)
+        * [Entity Listeners](#entity-listeners)
+        * [Transaction Listeners](#transaction-listeners)
+    * [Conclusion](#conclusion)
+    * [References](#references)
+        * [Standards & implementations](#standards--implementations)
+        * [Libraries](#libraries)
+        * [Validation ideology](#validation-ideology)
+        * [Further reading](#further-reading)
 
 ## Introduction
 
